@@ -1,0 +1,39 @@
+
+
+<!DOCTYPE html>
+<html lang="en-US" class="no-js">
+  <head>
+    <meta charset="UTF-8">
+    <title>BatStat</title>
+  </head>
+  <body>
+    <div id="batstat">
+    </div>
+
+    <script>
+
+      var div = document.getElementById("batstat");
+
+      if (navigator.getBattery) {
+        navigator.getBattery().then(function(battery) {
+          document.body.style.backgroundColor = "green";
+          display(battery);
+        });
+      } else if (navigator.battery) {
+        document.body.style.backgroundColor = "green";
+        display(navigator.battery);
+      } else {
+        document.body.style.backgroundColor = "red";
+        div.innerHTML = "<h1><b>BAD</b><h1><h2>Error: BatStat can't read your battery status!</h2>";
+      }
+
+      function display(battery) {
+        var status = "<h1>GOOD</h1><h2>";
+        status += "Your device battery is " + (battery.level * 100).toFixed(0) + "% charged. ";
+        status += "It is currently" + (battery.charging ? "" : " not ") + " being charged. </h2>";
+        div.innerHTML = status;
+      }
+
+    </script>
+  </body>
+</html>
